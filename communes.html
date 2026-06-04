@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire de redirection pour les IGU</title>
+  <link rel="stylesheet" href="static/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <h1>Formulaire d'aide à l'orientation pour le maintien à domicile</h1>
+    <input type="text" id="searchBar" placeholder="Rechercher une commune...">
+  </header>
+
+  <main>
+    <h2>Sélectionner la commune du patient</h2>
+    <ul id="communeList"></ul>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 - DAC VAR OUEST</p>
+  </footer>
+
+  <script>
+    // Dictionnaire complet communes -> type de structure
+    const COMMUNES = {
+      // Provence Verte – CLIC Provence Verte
+      "Bras":"clic_provenceverte","Brignoles":"clic_provenceverte","Camps-la-source":"clic_provenceverte",
+      "Carces":"clic_provenceverte","Chateauvert":"clic_provenceverte","Correns":"clic_provenceverte",
+      "Cotignac":"clic_provenceverte","Entrecasteaux":"clic_provenceverte","Forcalqueiret":"clic_provenceverte",
+      "Gareoult":"clic_provenceverte","La Celle":"clic_provenceverte","La Roquebrussanne":"clic_provenceverte",
+      "Le Val":"clic_provenceverte","Mazaugues":"clic_provenceverte","Meounes-les-Montrieux":"clic_provenceverte",
+      "Montfort-sur-Argens":"clic_provenceverte","Nans-les-Pins":"clic_provenceverte","Neoules":"clic_provenceverte",
+      "Ollieres":"clic_provenceverte","Plan-d'Aups-Sainte-Baume":"clic_provenceverte","Pourcieux":"clic_provenceverte",
+      "Pourrieres":"clic_provenceverte","Rocbaron":"clic_provenceverte","Rougiers":"clic_provenceverte",
+      "Sainte-Anastasie-sur-Issole":"clic_provenceverte","Saint-Maximin-la-Sainte-Baume":"clic_provenceverte",
+      "Tourves":"clic_provenceverte","Vins-sur-Caramy":"clic_provenceverte",
+
+      // Provence Verte – DAC Ouest
+      "Artigues":"dac_ouest","Barjols":"dac_ouest","Besse":"dac_ouest","Brue-Auriac":"dac_ouest","Cabasse":"dac_ouest",
+      "Esparron":"dac_ouest","Flassans":"dac_ouest","Fox-Amphoux":"dac_ouest","Ginasservis":"dac_ouest",
+      "La-Verdiere":"dac_ouest","Montmeyan":"dac_ouest","Ponteves":"dac_ouest","Rians":"dac_ouest",
+      "Saint-Julien":"dac_ouest","Saint-Martin":"dac_ouest","Saint-Zacharie":"dac_ouest","Seillons":"dac_ouest",
+      "Sillans":"dac_ouest","Tavernes":"dac_ouest","Varages":"dac_ouest","Vinon-sur-Verdon":"dac_ouest",
+
+      // Provence Verte – DAC Est
+      "Le Cannet des Maures":"dac_est","Les Mayons":"dac_est","Le Luc":"dac_est","Le Thoronet":"dac_est",
+      "Lorgues":"dac_est","Saint Antonin du Var":"dac_est","Salernes":"dac_est","Sillans la Cascade":"dac_est",
+      "Vidauban":"dac_est",
+
+      // Aire toulonnaise – CLIC Hadage
+      "Hyères":"clic_hadage","Carqueiranne":"clic_hadage","La Londe-les-Maures":"clic_hadage","Bormes-les-Mimosas":"clic_hadage",
+      "Le Rayol-Canadel-sur-Mer":"clic_hadage","Cavalaire-sur-Mer":"clic_hadage","Collobrières":"clic_hadage","Pierrefeu-du-Var":"clic_hadage",
+
+      // CLIC Vallée du Gapeau
+      "La Crau":"clic_gapeau","Belgentier":"clic_gapeau","La Farlède":"clic_gapeau",
+      "Solliès-Pont":"clic_gapeau","Solliès-Toucas":"clic_gapeau","Solliès-Ville":"clic_gapeau",
+
+      // CLIC du Coudon
+      "La Valette-du-Var":"clic_coudon","La Garde":"clic_coudon","Le Pradet":"clic_coudon","Le Revest-les-Eaux":"clic_coudon",
+
+      // CLIC Toulon
+      "Toulon":"clic_toulon",
+
+      // CLIC La Seyne
+      "La Seyne-sur-Mer":"clic_laseyne",
+
+      // Aire toulonnaise – DAC Ouest
+      "Cuers":"dac_ouest","Le Lavandou":"dac_ouest","Saint-Mandrier-sur-Mer":"dac_ouest","Six-Fours-les-Plages":"dac_ouest",
+      "Ollioules":"dac_ouest","Sanary-sur-Mer":"dac_ouest","Bandol":"dac_ouest","Saint-Cyr-sur-Mer":"dac_ouest",
+      "Le Castellet":"dac_ouest","Le Beausset":"dac_ouest","Evenos":"dac_ouest","Signes":"dac_ouest","Riboux":"dac_ouest",
+      "La Cadière-d'Azur":"dac_ouest","Puget-Ville":"dac_ouest","Carnoules":"dac_ouest","Pignans":"dac_ouest","Gonfaron":"dac_ouest"
+    };
+
+    // Correspondance type -> fichier existant
+    const FILE_BY_TYPE = {
+      clic_provenceverte: "contact_clic_provenceverte.html",
+      clic_gapeau: "contact_clic_gapeau.html",
+      clic_coudon: "contact_clic_coudon.html",
+      clic_hadage: "contact_clic_hadage.html",
+      clic_toulon: "contact_clic_toulon.html",
+      clic_laseyne: "contact_clic_laseyne.html",
+      dac_est: "contact_dac_est.html",
+      dac_ouest: "contact_dac.html"
+    };
+
+    // Libellés affichés dans l’étiquette
+    const TYPE_LABELS = {
+      clic_provenceverte: "CLIC Provence Verte",
+      clic_gapeau: "CLIC du Gapeau",
+      clic_coudon: "CLIC du Coudon",
+      clic_hadage: "CLIC Hadage",
+      clic_toulon: "CLIC Toulon",
+      clic_laseyne: "CLIC La Seyne",
+      dac_est: "DAC Var Est",
+      dac_ouest: "DAC Var Ouest"
+    };
+
+    // Génération triée A→Z (français)
+    const communesTriees = Object.keys(COMMUNES).sort((a,b)=>a.localeCompare(b,'fr'));
+    const ul = document.getElementById("communeList");
+
+    communesTriees.forEach(nom => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+
+      const type = COMMUNES[nom];
+      const target = FILE_BY_TYPE[type] || "contact_dac.html"; // fallback
+      const labelText = TYPE_LABELS[type] || "Structure";
+
+      a.href = `${target}?commune=${encodeURIComponent(nom)}`;
+
+      // On insère le nom + une étiquette à droite (le lien entier reste cliquable)
+      a.innerHTML = `
+        <span class="commune-name">${nom}</span>
+        <span class="dispositif-label ${type}">${labelText}</span>
+      `;
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    // Recherche dynamique
+    $(function(){
+      $("#searchBar").on("keyup", function() {
+        const value = $(this).val().toLowerCase();
+        $("#communeList li").each(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

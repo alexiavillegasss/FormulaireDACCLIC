@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire d'aide à la décision</title>
+
+  <link rel="stylesheet" href="static/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Barre de navigation -->
+  <header class="header-simple">
+    <h1>Formulaire d’aide à l’orientation pour le maintien à domicile</h1>
+  </header>
+
+  <!-- Contenu principal -->
+  <main>
+    <p class="description">
+      Le choix des options proposées permettra d'orienter le patient vers la structure la plus adaptée.<br>
+    </p>
+
+    <div class="question">
+      Le patient est-il bénéficiaire de l'APA ?
+    </div>
+
+    <div class="options">
+      <a href="contact_dac.html" class="btn btn-yes">Oui</a>
+      <a href="communes.html" class="btn btn-no">Non</a>
+      <a href="contact_dac.html" class="btn btn-dont-know">Je ne sais pas</a>
+    </div>
+
+    <!-- =========================
+         ENCADRÉ RESSOURCES
+         ========================= -->
+    <section class="ressources-container">
+      <h2 class="ressources-title">Ressources territoriales</h2>
+
+      <div class="ressources-actions">
+        <!-- Bouton 1 : Carte -->
+        <button id="toggle-carte" class="toggle-btn" aria-expanded="false" aria-controls="bloc-carte">
+          Carte des CLIC du territoire du DAC Var Ouest
+          <span id="arrow-carte" class="arrow-icon">▾</span>
+        </button>
+
+        <div id="bloc-carte" class="collapsible" hidden>
+          <img src="file/CarteTerritoireCLIC.png"
+               alt="Carte des territoires d’intervention du DAC Var Ouest et des CLIC partenaires"
+               class="carte-img">
+               <div style="text-align: center; margin: 15px 0;">
+      <a href="file/CarteTerritoireCLIC.png" download="carte-dac-var-ouest.jpg" class="btn-download grand-format">
+      Télécharger la carte en grand format
+      </a>
+       </div>
+        </div>
+        
+
+        <!-- Bouton 2 : Flyers -->
+        <button id="toggle-flyers" class="toggle-btn" aria-expanded="false" aria-controls="bloc-flyers">
+          Flyers des CLIC du territoire
+          <span id="arrow-flyers" class="arrow-icon">▾</span>
+        </button>
+
+        <div id="bloc-flyers" class="collapsible" hidden>
+          <div class="flyers-list" id="flyers-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      // -------- Toggle générique (même logique que ta carte actuelle) --------
+      function setupToggle(btnId, blocId, arrowId) {
+        const btn = document.getElementById(btnId);
+        const bloc = document.getElementById(blocId);
+        const arrow = document.getElementById(arrowId);
+
+        btn.addEventListener('click', () => {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!isOpen));
+          arrow.classList.toggle('open', !isOpen);
+          arrow.textContent = !isOpen ? '▴' : '▾';
+
+          if (isOpen) {
+            bloc.classList.remove('open');
+            setTimeout(() => { bloc.hidden = true; }, 250);
+          } else {
+            bloc.hidden = false;
+            requestAnimationFrame(() => bloc.classList.add('open'));
+          }
+        });
+      }
+
+      setupToggle('toggle-carte', 'bloc-carte', 'arrow-carte');
+      setupToggle('toggle-flyers', 'bloc-flyers', 'arrow-flyers');
+
+      // -------- Liste des flyers (clic = ouverture PDF, téléchargement possible) --------
+      // Mets les PDF dans le dossier "file/" pour garder la même logique que la carte.
+      const FLYERS = [
+        { label: "CLIC Provence Verte", file: "file/Flyer-ProvenceVerte.pdf" },
+        { label: "CLIC Hadage", file: "file/Flyer-Hadage.pdf" },
+        // { label: "CLIC Vallée du Gapeau", file: "file/Flyer-Gapeau.pdf" },  en attente de le recevoir 
+        { label: "CLIC du Coudon", file: "file/Flyer-Coudon.pdf" },
+        { label: "CLIC Toulon", file: "file/Flyer-Toulon.pdf" },
+        { label: "CLIC La Seyne", file: "file/Flyer-LaSeyne.pdf" },
+        { label: "DAC Var Ouest", file: "file/Flyer-DACVarOuest.pdf" },
+        // { label: "DAC Var Est", file: "file/Flyer-DACVE.pdf" }, en attente de la recevoir 
+      ];
+
+      const listContainer = document.getElementById('flyers-list');
+      if (!listContainer) return;
+
+      FLYERS.forEach(item => {
+        const a = document.createElement('a');
+        a.className = 'btn-download';
+        a.href = item.file;
+
+        // ouvre dans un nouvel onglet (l’utilisateur peut ensuite télécharger depuis le viewer)
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+
+        a.textContent = item.label;
+        listContainer.appendChild(a);
+      });
+    })();
+  </script>
+
+  <!-- Pied de page -->
+  <footer>
+    <p>&copy; 2025 - DAC VAR OUEST</p>
+  </footer>
+</body>
+</html>

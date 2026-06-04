@@ -1,0 +1,555 @@
+/* =========================================================
+   STYLE.CSS – DAC VAR OUEST
+   Version finale – nettoyée et centrée
+   Palette officielle :
+   #3766ae (bleu foncé)
+   #73bed7 (bleu clair)
+   #ea5f45 (corail)
+   #f8b52f (jaune)
+   ========================================================= */
+
+:root{
+  --blue: #3766ae;
+  --sky: #73bed7;
+  --coral: #ea5f45;
+  --yellow: #f8b52f;
+
+  --bg: #f4f7fb;
+  --surface: #ffffff;
+  --text: #1c2b4a;
+
+  --shadow-sm: 0 6px 14px rgba(0,0,0,0.10);
+  --shadow-md: 0 12px 26px rgba(0,0,0,0.14);
+
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+}
+
+/* --- Animation et taille de la flèche du bouton --- */
+.toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.3s;
+}
+
+.arrow-icon {
+  font-size: 22px; /* flèche plus grande */
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.arrow-icon.open {
+  transform: rotate(180deg); /* flèche vers le haut */
+}
+
+/* =========================
+   Base + footer bas de page
+   ========================= */
+
+html, body{
+  height: 100%;
+}
+
+body{
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+
+  display: flex;
+  flex-direction: column;
+}
+
+main{
+  flex: 1;
+  width: 88%;
+  max-width: 780px;   /* layout resserré */
+  margin: 20px auto;
+}
+
+footer{
+  background: var(--blue);
+  color: #fff;
+  text-align: center;
+  padding: 14px;
+}
+
+footer p{
+  margin: 0;
+}
+
+/* =========================
+   Headers
+   ========================= */
+
+header{
+  background: var(--blue);
+  color: #fff;
+  padding: 22px 18px;
+  text-align: center;
+}
+
+header h1{
+  margin: 0;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 30px;
+}
+
+.header-simple{
+  background: var(--blue);
+  color: #fff;
+  padding: 52px 18px;
+  text-align: center;
+}
+
+.header-simple h1{
+  margin: 0;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-size: 34px;
+  font-weight: 500;
+}
+
+@media (max-width: 520px){
+  header h1{ font-size: 24px; }
+  .header-simple h1{ font-size: 26px; }
+}
+
+/* =========================
+   Index – texte + question
+   ========================= */
+
+.description{
+  background: var(--surface);
+  border: 2px solid var(--sky);
+  border-left-width: 10px;
+  border-radius: var(--r-md);
+
+  padding: 14px 18px;
+  margin: 18px auto 10px;
+
+  max-width: 650px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.45;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.question{
+  text-align: center;
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+/* =========================
+   Boutons APA
+   ========================= */
+
+.options{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+
+  padding: 14px 28px;
+  min-width: 200px;
+
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+
+  background: var(--sky);
+  color: #ffffff;
+  border: 3px solid #5fb0cc;
+
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.btn:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:focus{
+  outline: 4px solid var(--yellow);
+  outline-offset: 4px;
+}
+
+/* =========================
+   Ressources territoriales
+   ========================= */
+
+.ressources-container{
+  background: var(--surface);
+  border: 2px solid var(--blue);
+  border-radius: var(--r-lg);
+
+  padding: 20px 20px;
+  margin: 32px auto 0;
+
+  max-width: 780px;
+  box-shadow: var(--shadow-md);
+}
+
+.ressources-title{
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--blue);
+  margin-bottom: 18px;
+}
+
+.ressources-title::after{
+  content:"";
+  display:block;
+  width: 60px;
+  height: 4px;
+  background: var(--coral);
+  margin: 10px auto 0;
+  border-radius: 4px;
+}
+
+.ressources-actions{
+  display: grid;
+  gap: 14px;
+}
+
+/* =========================
+   Accordéons (Carte centrée)
+   ========================= */
+
+.toggle-btn{
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: var(--blue);
+  color: #fff;
+
+  border: none;
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-btn:hover{
+  box-shadow: var(--shadow-md);
+}
+
+.arrow-icon{
+  font-size: 20px;
+  transition: transform .25s ease;
+}
+
+.arrow-icon.open{
+  transform: rotate(180deg);
+}
+
+.collapsible{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .25s ease;
+  
+  /* Permet d'aligner la carte et le bouton verticalement au centre */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.collapsible.open{
+  max-height: 3000px;
+}
+
+/* Ajustement et centrage parfait de la carte */
+.carte-img {
+  display: block;
+  margin: 20px auto 10px auto; 
+  max-width: 100%;       /* Ne déborde pas sur mobile */
+  max-height: 480px;     /* Redimensionnement propre sur grand écran */
+  height: auto;          /* Garde les proportions */
+  object-fit: contain;
+  border-radius: var(--r-sm);
+}
+
+/* =====================================
+   Bouton Téléchargement Unique & Centré
+   ===================================== */
+
+.btn-download{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 420px;
+  margin: 14px auto 24px auto; /* Centré horizontalement avec de l'espace en bas */
+
+  text-decoration: none;
+  font-size: 15px;      
+  font-weight: 800;
+
+  padding: 11px 24px;   
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: var(--blue);
+
+  border: 2px solid rgba(55, 102, 174, 0.4);
+  box-shadow: var(--shadow-sm);
+
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+  cursor: pointer;      
+}
+
+/* Le badge devant le texte du bouton */
+.btn-download::before{
+  content: "PDF";        
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .6px;
+
+  padding: 4px 8px;
+  border-radius: 999px;
+
+  background: var(--coral);
+  color: #fff;
+}
+
+/* Effets au survol */
+.btn-download:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue);
+  background: #f7fbff;
+}
+
+/* Style spécifique contextuel */
+.btn-download.grand-format {
+  font-size: 14px;
+  background: var(--surface);
+}
+
+/* =========================
+   Communes – liste propre
+   ========================= */
+
+#searchBar{
+  width: 100%;
+  max-width: 650px;
+  margin: 14px auto 20px;
+  display: block;
+
+  padding: 14px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--sky);
+  font-size: 16px;
+}
+
+/* =====================================
+   COMMUNES – BASE + 4 COLONNES (STABLE)
+   ===================================== */
+
+#communeList{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* responsive */
+@media (max-width: 1200px){
+  #communeList{ grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px){
+  #communeList{ grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 520px){
+  #communeList{ grid-template-columns: 1fr; }
+}
+
+/* chaque carte */
+#communeList li{
+  margin: 0;
+  display: flex; 
+}
+
+#communeList a{
+  display: flex;           
+  flex-direction: column;  
+  justify-content: space-between; 
+  align-items: flex-start; 
+  
+  padding: 16px 18px;
+  background: #ffffff;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #3766ae;
+  font-weight: 600;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+  border-left: 6px solid #3766ae;
+
+  width: 100%;             
+  min-height: 110px;       
+  box-sizing: border-box;  
+}
+
+/* nom */
+.commune-name{
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #3766ae;
+}
+
+/* badge */
+.dispositif-label{
+  display: inline-block;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  background: #73bed7;
+  color: #ffffff;
+}
+
+/* couleurs spécifiques */
+.dispositif-label.clic_provenceverte{ background:#73d778; color:#ffffff; }
+.dispositif-label.clic_gapeau{ background:#f8b52f; color:#ffffff; }
+.dispositif-label.clic_coudon{ background:#ea5f45; color:#ffffff; }
+.dispositif-label.clic_hadage{ background:#ff9bf7; color:#ffffff; }
+.dispositif-label.clic_toulon{ background:#f88629; color:#ffffff; }
+.dispositif-label.clic_laseyne{ background:#4b3fbf; color:#ffffff; }
+
+/* DAC */
+.dispositif-label.dac_est{
+  background: #10b9c5;      
+  color: #ffffff;
+}
+
+.dispositif-label.dac_ouest{
+  background: #78a8f1;      
+  color: #ffffff;
+}
+
+/* =========================
+   Pages contact
+   ========================= */
+
+.encadre-info{
+  background: #fff6db;
+  border: 2px solid var(--yellow);
+  border-left-width: 10px;
+  border-radius: var(--r-md);
+
+  padding: 14px 16px;
+  margin: 18px auto;
+
+  max-width: 650px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-box{
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  max-width: 520px;
+  margin: 0 auto;
+
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.header-box{
+  background: var(--sky);
+  color: #083044;
+  font-weight: 800;
+  padding: 14px;
+  border-radius: var(--r-lg);
+  margin-bottom: 14px;
+}
+
+.logo-container img{
+  max-width: 140px;
+  margin: 10px auto;
+}
+
+.contact-details{
+  background: #eef6ff;
+  border-radius: var(--r-md);
+  padding: 12px;
+  margin: 14px auto;
+}
+
+.form-button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 18px;
+  margin-top: 14px;
+
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none;
+
+  background: var(--sky);
+  color: #fff;
+  border: 3px solid #5fb0cc;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.form-button.contact-dac{
+  background: var(--blue);
+  border-color: #2f5799;
+}
+
+/* Titre sélection commune */
+.section-title,
+h2{
+  color: #3766ae; 
+}
+
+.flyers-list{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 16px;
+
+  padding: 14px 0 6px;
+  max-width: 700px;
+  margin: 0 auto;
+}
